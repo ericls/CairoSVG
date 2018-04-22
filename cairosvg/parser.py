@@ -199,7 +199,11 @@ class Node(dict):
             self.url = getattr(self, 'url', None)
             self.parent = getattr(self, 'parent', None)
 
-        self.update(self.xml_tree.attrib)
+        self.update([
+            (name, value)
+            for name, value in self.xml_tree.attrib.items()
+            if value
+        ])
 
         # Apply CSS rules
         style_attr = node.get('style')
